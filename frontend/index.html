@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karya Yatra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linen;
+        color: #333;
+        min-height: 100vh;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .login-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        padding: 40px;
+        max-width: 400px;
+        margin: 100px auto;
+    }
+    h1 {
+        font-family: 'Dancing Script', cursive;
+        color: rgb(108, 33, 52);
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    h2 {
+        font-size: 1.2rem;
+        color: #666;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: rgb(108, 33, 52);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+    button:hover {
+        background-color: rgb(88, 13, 32);
+    }
+    .google-btn {
+        background-color: #4285F4;
+        margin-top: 15px;
+    }
+    .google-btn:hover {
+        background-color: #357ae8;
+    }
+    .switch-form, .reset-password {
+        text-align: center;
+        margin-top: 20px;
+    }
+    a {
+        color: rgb(108, 33, 52);
+        text-decoration: none;
+        cursor: pointer;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    #todo-container {
+        display: none;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        padding: 40px;
+        margin-top: 50px;
+        background: rgb(231, 201, 172);
+    }
+    .todo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .todo-form {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .todo-form input {
+        flex-grow: 1;
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+    .todo-form button {
+        width: auto;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+    }
+    .todo-form button:hover {
+        background-color: #45a049;
+    }
+    .todo-list {
+        list-style-type: none;
+    }
+    .todo-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 4px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+    .todo-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .todo-item.completed {
+        opacity: 0.6;
+    }
+    .todo-item.completed span {
+        text-decoration: line-through;
+    }
+    .todo-actions button {
+        width: auto;
+        padding: 5px;
+        margin-left: 5px;
+        background-color: transparent;
+        color: #333;
+        font-size: 1.2rem;
+    }
+    .logout-btn {
+        background-color: #f44336;
+        font-size: 0.9rem;
+        padding: 8px 15px;
+        width: auto;
+    }
+    .logout-btn:hover {
+        background-color: #d32f2f;
+    }
+    .error-message {
+        color: #f44336;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .filter-buttons {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .filter-buttons button {
+        margin: 0 5px;
+        padding: 8px 15px;
+        background-color: #f0f0f0;
+        color: #333;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: auto;
+    }
+    .filter-buttons button.active {
+        background-color: rgb(108, 33, 52);
+        color: white;
+    }
+    .filter-buttons button:hover {
+        background-color: #e0e0e0;
+    }
+    .password-container {
+        position: relative;
+    }
+    .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+    .reminder-form {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width:150px;
+        position:relative;
+        left:850px;
+    }
+        /* ... (styles remain unchanged) ... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="login-container" class="login-container">
+            <h1>Karya Yatra</h1>
+            <h2>Journey through your to-do's</h2>
+            <form id="login-form">
+                <div id="login-error" class="error-message"></div>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <div class="password-container">
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('login-password', this)"></i>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <button class="google-btn" onclick="loginWithGoogle()">Continue with Google</button>
+            <div class="switch-form">
+                <a onclick="switchForm('signup')">Don't have an account? Sign up</a>
+            </div>
+            <div class="reset-password">
+                <a onclick="showResetPassword()">Forgot password?</a>
+            </div>
+        </div>
+
+        <div id="signup-container" class="login-container" style="display:none;">
+            <h1>Karya Yatra</h1>
+            <h2>Create your account</h2>
+            <form id="signup-form">
+                <input type="text" id="signup-name" placeholder="Full Name" required>
+                <input type="email" id="signup-email" placeholder="Email" required>
+                <div class="password-container">
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                    <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('signup-password', this)"></i>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+            <div class="switch-form">
+                <a onclick="switchForm('login')">Already have an account? Login</a>
+            </div>
+        </div>
+
+        <div id="reset-password-container" class="login-container" style="display:none;">
+            <h1>Karya Yatra</h1>
+            <h2>Reset your password</h2>
+            <form id="reset-password-form">
+                <input type="email" id="reset-email" placeholder="Email" required>
+                <button type="submit">Reset Password</button>
+            </form>
+            <div class="switch-form">
+                <a onclick="switchForm('login')">Back to Login</a>
+            </div>
+        </div>
+
+        <div id="todo-container" style="display:none;">
+            <div class="todo-header">
+                <h1>Karya Yatra</h1>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <h2>Welcome, <span id="user-name"></span>!</h2>
+            <form id="todo-form" class="todo-form">
+                <input type="text" id="todo-input" placeholder="Add a new task" required>
+                <button type="submit">Add Task</button>
+            </form>
+            <form id="reminder-form" class="reminder-form">
+                <input type="datetime-local" id="reminder-time" required>
+                <button type="submit">Set Reminder</button>
+            </form>
+            <div class="filter-buttons">
+                <button onclick="setFilter('all')" class="active">All</button>
+                <button onclick="setFilter('completed')">Completed</button>
+                <button onclick="setFilter('incomplete')">Incomplete</button>
+            </div>
+            <ul id="todo-list" class="todo-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // ====================
+// Configuration
+// ====================
+const API_BASE_URL = 'http://localhost:5001/api';
+let authToken = localStorage.getItem('karyaYatraToken');
+let loggedInUser = JSON.parse(localStorage.getItem('karyaYatraUser')) || null;
+let currentFilter = 'all';
+
+// ====================
+// Helper Functions
+// ====================
+async function apiCall(endpoint, method = 'GET', body = null, requiresAuth = true) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (requiresAuth && authToken) {
+        headers['Authorization'] = `Bearer ${authToken}`;
+    }
+
+    const config = {
+        method,
+        headers,
+    };
+
+    if (body) {
+        config.body = JSON.stringify(body);
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.message || `Error: ${response.status}`);
+        }
+        return data;
+    } catch (error) {
+        console.error('API Call failed:', error);
+        throw error;
+    }
+}
+
+function setAuth(userData, token) {
+    localStorage.setItem('karyaYatraToken', token);
+    localStorage.setItem('karyaYatraUser', JSON.stringify(userData));
+    authToken = token;
+    loggedInUser = userData;
+}
+
+function clearAuth() {
+    localStorage.removeItem('karyaYatraToken');
+    localStorage.removeItem('karyaYatraUser');
+    authToken = null;
+    loggedInUser = null;
+}
+
+function togglePasswordVisibility(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
+// ====================
+// Authentication
+// ====================
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    document.getElementById('login-error').textContent = '';
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    
+    try {
+        const data = await apiCall('/auth/login', 'POST', { email, password }, false);
+        setAuth({
+            _id: data._id,
+            name: data.name,
+            email: data.email,
+            todos: data.todos || []
+        }, data.token);
+        showTodoList();
+    } catch (error) {
+        document.getElementById('login-error').textContent = error.message || 'Login failed. Please check your credentials.';
+    }
+});
+
+document.getElementById('signup-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    
+    try {
+        const data = await apiCall('/auth/signup', 'POST', { name, email, password }, false);
+        setAuth({
+            _id: data._id,
+            name: data.name,
+            email: data.email,
+            todos: data.todos || []
+        }, data.token);
+        showTodoList();
+    } catch (error) {
+        alert(error.message || 'Signup failed. Please try again.');
+    }
+});
+
+document.getElementById('reset-password-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('reset-email').value;
+    try {
+        await apiCall('/auth/request-password-reset', 'POST', { email }, false);
+        alert('If your email is registered, you will receive a password reset link.');
+        switchForm('login');
+    } catch (error) {
+        alert(error.message || 'Failed to send reset request.');
+    }
+});
+
+async function loginWithGoogle() {
+    const randomId = Math.floor(Math.random() * 1000000);
+    const googleUserInfo = {
+        name: `Google User ${randomId}`,
+        email: `user${randomId}@example.com`,
+        googleId: `google-${randomId}`
+    };
+
+    try {
+        const data = await apiCall('/auth/google', 'POST', googleUserInfo, false);
+        setAuth({
+            _id: data._id,
+            name: data.name,
+            email: data.email,
+            todos: data.todos || []
+        }, data.token);
+        showTodoList();
+    } catch (error) {
+        alert(error.message || 'Google login failed.');
+    }
+}
+
+// ====================
+// Todo Functions
+// ====================
+async function showTodoList() {
+    if (!authToken) {
+        switchForm('login');
+        return;
+    }
+    
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('signup-container').style.display = 'none';
+    document.getElementById('reset-password-container').style.display = 'none';
+    document.getElementById('todo-container').style.display = 'block';
+    document.getElementById('user-name').textContent = loggedInUser.name;
+    
+    try {
+        const todos = await apiCall('/todos');
+        loggedInUser.todos = todos;
+        localStorage.setItem('karyaYatraUser', JSON.stringify(loggedInUser));
+        renderTodos();
+    } catch (error) {
+        console.error("Failed to load todos:", error);
+        document.getElementById('todo-list').innerHTML = '<li class="error-message">Could not load todos. Please try again.</li>';
+    }
+}
+
+document.getElementById('todo-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const todoText = document.getElementById('todo-input').value;
+    if (!todoText) return;
+    
+    try {
+        const newTodo = await apiCall('/todos', 'POST', { text: todoText });
+        loggedInUser.todos.push(newTodo);
+        localStorage.setItem('karyaYatraUser', JSON.stringify(loggedInUser));
+        document.getElementById('todo-input').value = '';
+        renderTodos();
+    } catch (error) {
+        alert('Failed to add todo: ' + error.message);
+    }
+});
+
+async function toggleTodo(todoId) {
+    try {
+        const updatedTodo = await apiCall(`/todos/${todoId}/toggle`, 'PUT');
+        const index = loggedInUser.todos.findIndex(t => t.id === todoId);
+        if (index > -1) {
+            loggedInUser.todos[index] = updatedTodo;
+            localStorage.setItem('karyaYatraUser', JSON.stringify(loggedInUser));
+        }
+        renderTodos();
+    } catch (error) {
+        alert('Failed to toggle todo: ' + error.message);
+    }
+}
+
+async function deleteTodo(todoId) {
+    try {
+        await apiCall(`/todos/${todoId}`, 'DELETE');
+        loggedInUser.todos = loggedInUser.todos.filter(t => t.id !== todoId);
+        localStorage.setItem('karyaYatraUser', JSON.stringify(loggedInUser));
+        renderTodos();
+    } catch (error) {
+        alert('Failed to delete todo: ' + error.message);
+    }
+}
+
+// ====================
+// UI Functions (Keep your existing UI code)
+// ====================
+function switchForm(form) {
+    document.getElementById('login-container').style.display = form === 'login' ? 'block' : 'none';
+    document.getElementById('signup-container').style.display = form === 'signup' ? 'block' : 'none';
+    document.getElementById('reset-password-container').style.display = 'none';
+    document.getElementById('todo-container').style.display = 'none';
+    document.getElementById('login-error').textContent = '';
+}
+
+function showResetPassword() {
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('reset-password-container').style.display = 'block';
+}
+
+function setFilter(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-buttons button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+    renderTodos();
+}
+
+function renderTodos() {
+    const todoList = document.getElementById('todo-list');
+    todoList.innerHTML = '';
+    
+    if (!loggedInUser?.todos?.length) {
+        todoList.innerHTML = '<li class="empty-message">No tasks yet. Add your first task!</li>';
+        return;
+    }
+
+    const filteredTodos = loggedInUser.todos.filter(todo => {
+        if (currentFilter === 'all') return true;
+        if (currentFilter === 'completed') return todo.completed;
+        return !todo.completed;
+    });
+
+    if (filteredTodos.length === 0) {
+        const message = currentFilter === 'completed' 
+            ? 'No completed tasks yet' 
+            : 'No incomplete tasks';
+        todoList.innerHTML = `<li class="empty-message">${message}</li>`;
+        return;
+    }
+
+    filteredTodos.forEach(todo => {
+        const li = document.createElement('li');
+        li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+        li.innerHTML = `
+            <span>${todo.text}</span>
+            <div class="todo-actions">
+                <button onclick="toggleTodo('${todo.id}')">
+                    <i class="fas fa-check"></i>
+                </button>
+                <button onclick="deleteTodo('${todo.id}')">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        todoList.appendChild(li);
+    });
+}
+
+function logout() {
+    clearAuth();
+    switchForm('login');
+    document.getElementById('todo-list').innerHTML = '';
+}
+
+// ====================
+// Reminder Functionality (Keep your existing implementation)
+// ====================
+document.getElementById('reminder-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const reminderTime = new Date(document.getElementById('reminder-time').value).getTime();
+    const now = new Date().getTime();
+    const timeUntilReminder = reminderTime - now;
+
+    if (timeUntilReminder > 0) {
+        setTimeout(() => {
+            if ("Notification" in window) {
+                Notification.requestPermission().then(function(permission) {
+                    if (permission === "granted") {      
+                        new Notification("Karya Yatra Reminder", {
+                            body: "It's time to check your todo list!",
+                        });
+                    }
+                });
+            }
+        }, timeUntilReminder);
+        alert('Reminder set successfully!');
+    } else {
+        alert('Please choose a future time for the reminder.');
+    }
+});
+
+// ====================
+// Initialize App
+// ====================
+window.addEventListener('DOMContentLoaded', () => {
+    if (authToken && loggedInUser) {
+        // Verify token is still valid
+        showTodoList();
+    } else {
+        switchForm('login');
+    }
+});
+        </script>
+        </body>
+        </html>
